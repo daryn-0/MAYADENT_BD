@@ -1,5 +1,6 @@
 package com.mayadent.MAYADENTBD.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -38,4 +40,12 @@ public class Paciente {
     private LocalDate fecha_nacimiento;
     @Column(name = "estado")
     private String estado;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "paciente")
+    @JsonIgnore
+    private Set<HistoriaClinica> historiaClinica;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "paciente")
+    @JsonIgnore
+    private Set<Cita> cita;
 }
