@@ -1,10 +1,14 @@
 package com.mayadent.MAYADENTBD.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +26,8 @@ public class Rol {
     private String nombre;
     @Column(name = "estado")
     private String estado;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rol")
+    @JsonIgnore
+    private Set<UsuarioRol> usuarioRol;
 }

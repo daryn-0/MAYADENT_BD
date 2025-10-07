@@ -34,16 +34,12 @@ public class Usuario {
     @Column(name = "estado")
     private String estado;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuarios_roles",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id")
-    )
-    private Set<Rol> roles;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
     @JsonIgnore
     private Set<Cita> cita;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<UsuarioRol> usuarioRol;
 }
 

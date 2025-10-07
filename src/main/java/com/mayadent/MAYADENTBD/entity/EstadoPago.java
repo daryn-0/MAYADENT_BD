@@ -25,7 +25,7 @@ public class EstadoPago {
     @Column(name = "estado")
     private char estado;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "estadoPagos")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "estadoPago")
     @JsonIgnore
     private Set<Factura> factura;
 }
