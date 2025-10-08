@@ -1,4 +1,40 @@
 package com.mayadent.MAYADENTBD.daoImpl;
 
-public class MetodoPagoDaoImpl {
+import com.mayadent.MAYADENTBD.dao.MetodoPagoDao;
+import com.mayadent.MAYADENTBD.entity.MetodoPago;
+import com.mayadent.MAYADENTBD.repository.MetodoPagoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class MetodoPagoDaoImpl implements MetodoPagoDao {
+    @Autowired
+    private MetodoPagoRepository metodoPagoRepository;
+
+    @Override
+    public MetodoPago create(MetodoPago mp) {
+        return metodoPagoRepository.save(mp);
+    }
+
+    @Override
+    public MetodoPago update(MetodoPago mp) {
+        return metodoPagoRepository.save(mp);
+    }
+
+    @Override
+    public void delete(MetodoPago mp) {
+        metodoPagoRepository.delete(mp);
+    }
+
+    @Override
+    public MetodoPago read(Long id) {
+        return metodoPagoRepository.findById(id).get();
+    }
+
+    @Override
+    public List<MetodoPago> readAll() {
+        return metodoPagoRepository.findAll();
+    }
 }
