@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UsuarioDaoImpl implements UsuarioDao {
@@ -18,8 +19,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Usuario find(Long id) {
-        return usuarioRepository.findById(id).get();
+    public Optional<Usuario> read(Long id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override
@@ -28,12 +29,13 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public void delete(Usuario u) {
-        usuarioRepository.delete(u);
+    public void delete(Long id) {
+        usuarioRepository.deleteById(id);
     }
 
     @Override
-    public List<Usuario> findAll() {
+    public List<Usuario> readAll() {
         return usuarioRepository.findAll();
     }
+
 }

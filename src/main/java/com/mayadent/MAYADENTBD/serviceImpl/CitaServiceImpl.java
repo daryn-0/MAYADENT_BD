@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CitaServiceImpl implements CitaService {
@@ -24,7 +25,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public Cita read(Long id) {
+    public Optional<Cita>read(Long id) {
         return citaDao.read(id);
     }
 

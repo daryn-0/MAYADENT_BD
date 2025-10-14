@@ -4,11 +4,13 @@ import com.mayadent.MAYADENTBD.entity.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public interface UsuarioService {
     Usuario create(Usuario u);
-    Usuario find(Long id);
+    Optional<Usuario> read(Long id);
     Usuario update(Usuario u);
-    void delete(Usuario u);
-    List<Usuario> findAll();
+    void delete(Long id);
+    List<Usuario> readAll();
 }

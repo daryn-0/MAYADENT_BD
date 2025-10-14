@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -19,8 +20,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario find(Long id) {
-        return usuarioDao.find(id);
+    public Optional<Usuario> read(Long id) {
+        return usuarioDao.read(id);
     }
 
     @Override
@@ -29,12 +30,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void delete(Usuario u) {
-        usuarioDao.delete(u);
+    public void delete(Long id) {
+        usuarioDao.delete(id);
     }
 
     @Override
-    public List<Usuario> findAll() {
-        return usuarioDao.findAll();
+    public List<Usuario> readAll() {
+        return usuarioDao.readAll();
     }
 }

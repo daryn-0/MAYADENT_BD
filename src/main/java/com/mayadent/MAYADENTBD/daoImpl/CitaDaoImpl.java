@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+
 @Component
 public class CitaDaoImpl implements CitaDao {
     @Autowired
@@ -23,8 +25,8 @@ public class CitaDaoImpl implements CitaDao {
     }
 
     @Override
-    public Cita read(Long id) {
-        return citaRepository.findById(id).get();
+    public Optional<Cita> read(Long id) {
+        return citaRepository.findById(id);
     }
 
     @Override
