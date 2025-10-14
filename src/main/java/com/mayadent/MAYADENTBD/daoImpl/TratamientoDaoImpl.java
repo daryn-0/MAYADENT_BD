@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TratamientoDaoImpl implements TratamientoDao {
@@ -19,8 +20,8 @@ public class TratamientoDaoImpl implements TratamientoDao {
     }
 
     @Override
-    public Tratamiento read(Long id) {
-        return tratamientoRepository.findById(id).get();
+    public Optional<Tratamiento> read(Long id) {
+        return tratamientoRepository.findById(id);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class TratamientoDaoImpl implements TratamientoDao {
     }
 
     @Override
-    public void delete(Tratamiento t) {
-        tratamientoRepository.delete(t);
+    public void delete(Long id) {
+        tratamientoRepository.deleteById(id);
     }
 
     @Override

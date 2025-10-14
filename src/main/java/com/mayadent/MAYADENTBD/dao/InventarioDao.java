@@ -4,12 +4,13 @@ import com.mayadent.MAYADENTBD.entity.Inventario;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public interface InventarioDao {
     Inventario create(Inventario in);
     Inventario update(Inventario in);
-    void delete(Inventario in);
-    List<Inventario> findAll();
-    Inventario read(Long id);
+    void delete(Long id);
+    List<Inventario> readAll();
+    Optional<Inventario> read(Long id);
 }

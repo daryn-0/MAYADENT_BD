@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UsuarioRolDaoImpl implements UsuarioRolDao {
@@ -19,8 +20,8 @@ public class UsuarioRolDaoImpl implements UsuarioRolDao {
     }
 
     @Override
-    public UsuarioRol read(Long id) {
-        return usuarioRolRepository.findById(id).get();
+    public Optional<UsuarioRol> read(Long id) {
+        return usuarioRolRepository.findById(id);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class UsuarioRolDaoImpl implements UsuarioRolDao {
     }
 
     @Override
-    public void delete(UsuarioRol ur) {
-        usuarioRolRepository.delete(ur);
+    public void delete(Long id) {
+        usuarioRolRepository.deleteById(id);
     }
 
     @Override

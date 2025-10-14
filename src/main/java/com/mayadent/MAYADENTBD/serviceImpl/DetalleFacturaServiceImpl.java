@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DetalleFacturaServiceImpl implements DetalleFacturaService {
@@ -19,7 +20,7 @@ public class DetalleFacturaServiceImpl implements DetalleFacturaService {
     }
 
     @Override
-    public DetalleFactura read(Long id) {
+    public Optional<DetalleFactura> read(Long id) {
         return detalleFacturaDao.read(id);
     }
 
@@ -29,8 +30,8 @@ public class DetalleFacturaServiceImpl implements DetalleFacturaService {
     }
 
     @Override
-    public void delete(DetalleFactura df) {
-        detalleFacturaDao.delete(df);
+    public void delete(Long id) {
+        detalleFacturaDao.delete(id);
     }
 
     @Override

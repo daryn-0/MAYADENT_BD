@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MetodoPagoDaoImpl implements MetodoPagoDao {
@@ -24,13 +25,13 @@ public class MetodoPagoDaoImpl implements MetodoPagoDao {
     }
 
     @Override
-    public void delete(MetodoPago mp) {
-        metodoPagoRepository.delete(mp);
+    public void delete(Long id) {
+        metodoPagoRepository.deleteById(id);
     }
 
     @Override
-    public MetodoPago read(Long id) {
-        return metodoPagoRepository.findById(id).get();
+    public Optional<MetodoPago> read(Long id) {
+        return metodoPagoRepository.findById(id);
     }
 
     @Override

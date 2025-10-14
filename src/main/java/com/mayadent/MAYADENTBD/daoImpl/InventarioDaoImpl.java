@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class InventarioDaoImpl implements InventarioDao {
@@ -24,17 +25,17 @@ public class InventarioDaoImpl implements InventarioDao {
     }
 
     @Override
-    public void delete(Inventario in) {
-        inventarioRepository.delete(in);
+    public void delete(Long id) {
+        inventarioRepository.deleteById(id);
     }
 
     @Override
-    public List<Inventario> findAll() {
+    public List<Inventario> readAll() {
         return inventarioRepository.findAll();
     }
 
     @Override
-    public Inventario read(Long id) {
-        return inventarioRepository.findById(id).get();
+    public Optional<Inventario> read(Long id) {
+        return inventarioRepository.findById(id);
     }
 }

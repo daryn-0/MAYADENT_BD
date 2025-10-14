@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class HistoriaClinicaDaoImpl implements HistoriaClinicaDao {
@@ -24,13 +25,13 @@ public class HistoriaClinicaDaoImpl implements HistoriaClinicaDao {
     }
 
     @Override
-    public void delete(HistoriaClinica hc) {
-        historiaClinicaRepository.delete(hc);
+    public void delete(Long id) {
+        historiaClinicaRepository.deleteById(id);
     }
 
     @Override
-    public HistoriaClinica read(Long id) {
-        return historiaClinicaRepository.findById(id).get();
+    public Optional<HistoriaClinica> read(Long id) {
+        return historiaClinicaRepository.findById(id);
     }
 
     @Override

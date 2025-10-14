@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioRolServiceImpl implements UsuarioRolService {
@@ -19,7 +20,7 @@ public class UsuarioRolServiceImpl implements UsuarioRolService {
     }
 
     @Override
-    public UsuarioRol read(Long id) {
+    public Optional<UsuarioRol> read(Long id) {
         return usuarioRolDao.read(id);
     }
 
@@ -29,8 +30,8 @@ public class UsuarioRolServiceImpl implements UsuarioRolService {
     }
 
     @Override
-    public void delete(UsuarioRol ur) {
-        usuarioRolDao.delete(ur);
+    public void delete(Long id) {
+        usuarioRolDao.delete(id);
     }
 
     @Override

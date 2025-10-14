@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class EstadoCitaDaoImpl implements EstadoCitaDao {
@@ -19,8 +20,8 @@ public class EstadoCitaDaoImpl implements EstadoCitaDao {
     }
 
     @Override
-    public EstadoCita read(Long id) {
-        return estadoCitaRepository.findById(id).get();
+    public Optional<EstadoCita> read(Long id) {
+        return estadoCitaRepository.findById(id);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class EstadoCitaDaoImpl implements EstadoCitaDao {
     }
 
     @Override
-    public void delete(EstadoCita ec) {
-        estadoCitaRepository.delete(ec);
+    public void delete(Long id) {
+        estadoCitaRepository.deleteById(id);
     }
 
     @Override

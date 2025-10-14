@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+
 @Component
 public class CitaTratamientoDaoImpl implements CitaTratamientoDao {
     @Autowired
@@ -23,13 +25,13 @@ public class CitaTratamientoDaoImpl implements CitaTratamientoDao {
     }
 
     @Override
-    public void delete(Cita_Tratamiento ct) {
-        citaTratamientoRepository.delete(ct);
+    public void delete(Long id) {
+        citaTratamientoRepository.deleteById(id);
     }
 
     @Override
-    public Cita_Tratamiento read(Long id) {
-        return citaTratamientoRepository.findById(id).get();
+    public Optional<Cita_Tratamiento> read(Long id) {
+        return citaTratamientoRepository.findById(id);
     }
 
     @Override

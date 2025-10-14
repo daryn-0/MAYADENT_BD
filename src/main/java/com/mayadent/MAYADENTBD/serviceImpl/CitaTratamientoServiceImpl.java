@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CitaTratamientoServiceImpl implements CitaTratamientoService {
@@ -24,12 +25,13 @@ public class CitaTratamientoServiceImpl implements CitaTratamientoService {
     }
 
     @Override
-    public void delete(Cita_Tratamiento ct) {
-        citaTratamientoDao.delete(ct);
+    public void delete(Long id) {
+        citaTratamientoDao.delete(id);
     }
 
+
     @Override
-    public Cita_Tratamiento read(Long id) {
+    public Optional<Cita_Tratamiento> read(Long id) {
         return citaTratamientoDao.read(id);
     }
 

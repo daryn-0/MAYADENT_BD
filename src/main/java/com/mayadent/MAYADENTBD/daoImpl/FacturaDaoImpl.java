@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FacturaDaoImpl implements FacturaDao {
@@ -25,13 +26,13 @@ public class FacturaDaoImpl implements FacturaDao {
     }
 
     @Override
-    public void delete(Factura f) {
-facturaRepository.delete(f);
+    public void delete(Long id) {
+        facturaRepository.deleteById(id);
     }
 
     @Override
-    public Factura read(Long id) {
-        return facturaRepository.findById(id).get();
+    public Optional<Factura> read(Long id) {
+        return facturaRepository.findById(id);
     }
 
     @Override

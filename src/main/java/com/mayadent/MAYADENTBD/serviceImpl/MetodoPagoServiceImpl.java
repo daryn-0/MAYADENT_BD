@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MetodoPagoServiceImpl implements MetodoPagoService {
@@ -24,12 +25,12 @@ public class MetodoPagoServiceImpl implements MetodoPagoService {
     }
 
     @Override
-    public void delete(MetodoPago mp) {
-        metodoPagoDao.delete(mp);
+    public void delete(Long id) {
+        metodoPagoDao.delete(id);
     }
 
     @Override
-    public MetodoPago read(Long id) {
+    public Optional<MetodoPago> read(Long id) {
         return metodoPagoDao.read(id);
     }
 

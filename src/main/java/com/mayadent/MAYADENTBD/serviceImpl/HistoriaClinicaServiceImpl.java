@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
@@ -24,12 +25,12 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
     }
 
     @Override
-    public void delete(HistoriaClinica hc) {
-        historiaClinicaDao.delete(hc);
+    public void delete(Long id) {
+        historiaClinicaDao.delete(id);
     }
 
     @Override
-    public HistoriaClinica read(Long id) {
+    public Optional<HistoriaClinica> read(Long id) {
         return historiaClinicaDao.read(id);
     }
 

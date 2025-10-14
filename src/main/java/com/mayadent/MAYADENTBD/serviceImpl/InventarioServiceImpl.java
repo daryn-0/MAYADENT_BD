@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InventarioServiceImpl implements InventarioService {
@@ -24,17 +25,17 @@ public class InventarioServiceImpl implements InventarioService {
     }
 
     @Override
-    public void delete(Inventario in) {
-        inventarioDao.delete(in);
+    public void delete(Long id) {
+        inventarioDao.delete(id);
     }
 
     @Override
-    public List<Inventario> findAll() {
-        return inventarioDao.findAll();
+    public List<Inventario> readAll() {
+        return inventarioDao.readAll();
     }
 
     @Override
-    public Inventario read(Long id) {
+    public Optional<Inventario> read(Long id) {
         return inventarioDao.read(id);
     }
 }

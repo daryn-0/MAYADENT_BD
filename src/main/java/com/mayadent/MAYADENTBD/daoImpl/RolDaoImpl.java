@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RolDaoImpl implements RolDao {
@@ -19,8 +20,8 @@ public class RolDaoImpl implements RolDao {
     }
 
     @Override
-    public Rol read(Long id) {
-        return rolRepository.findById(id).get();
+    public Optional<Rol> read(Long id) {
+        return rolRepository.findById(id);
     }
 
     @Override

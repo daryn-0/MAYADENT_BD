@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UsoInsumosDaoImpl implements UsoInsumoDao{
@@ -18,8 +19,8 @@ public class UsoInsumosDaoImpl implements UsoInsumoDao{
     }
 
     @Override
-    public UsoInsumos read(Long id) {
-        return repo.findById(id).get();
+    public Optional<UsoInsumos> read(Long id) {
+        return repo.findById(id);
     }
 
     @Override
@@ -28,8 +29,8 @@ public class UsoInsumosDaoImpl implements UsoInsumoDao{
     }
 
     @Override
-    public void delete(UsoInsumos ui) {
-        repo.delete(ui);
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 
     @Override

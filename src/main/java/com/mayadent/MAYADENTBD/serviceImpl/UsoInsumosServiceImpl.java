@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsoInsumosServiceImpl implements UsoInsumosService {
@@ -19,7 +20,7 @@ public class UsoInsumosServiceImpl implements UsoInsumosService {
     }
 
     @Override
-    public UsoInsumos read(Long id) {
+    public Optional<UsoInsumos> read(Long id) {
         return usoInsumoDao.read(id);
     }
 
@@ -29,8 +30,8 @@ public class UsoInsumosServiceImpl implements UsoInsumosService {
     }
 
     @Override
-    public void delete(UsoInsumos ui) {
-        usoInsumoDao.delete(ui);
+    public void delete(Long id) {
+        usoInsumoDao.delete(id);
     }
 
     @Override

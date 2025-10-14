@@ -4,11 +4,13 @@ import com.mayadent.MAYADENTBD.entity.UsuarioRol;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public interface UsuarioRolService {
     UsuarioRol create(UsuarioRol ur);
-    UsuarioRol read(Long id);
+    Optional<UsuarioRol> read(Long id);
     UsuarioRol update(UsuarioRol ur);
-    void delete(UsuarioRol ur);
+    void delete(Long id);
     List<UsuarioRol> readAll();
 }

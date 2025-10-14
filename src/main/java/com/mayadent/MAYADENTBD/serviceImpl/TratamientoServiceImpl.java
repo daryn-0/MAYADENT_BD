@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TratamientoServiceImpl implements TratamientoService {
@@ -19,7 +20,7 @@ public class TratamientoServiceImpl implements TratamientoService {
     }
 
     @Override
-    public Tratamiento read(Long id) {
+    public Optional<Tratamiento> read(Long id) {
         return tratamientoDao.read(id);
     }
 
@@ -29,8 +30,8 @@ public class TratamientoServiceImpl implements TratamientoService {
     }
 
     @Override
-    public void delete(Tratamiento t) {
-        tratamientoDao.delete(t);
+    public void delete(Long id) {
+        tratamientoDao.delete(id);
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PacienteDaoImpl implements PacienteDao {
@@ -24,13 +25,13 @@ public class PacienteDaoImpl implements PacienteDao {
     }
 
     @Override
-    public void delete(Paciente p) {
-        pacienteRepository.delete(p);
+    public void delete(Long id) {
+        pacienteRepository.deleteById(id);
     }
 
     @Override
-    public Paciente read(Long id) {
-        return pacienteRepository.findById(id).get();
+    public Optional<Paciente> read(Long id) {
+        return pacienteRepository.findById(id);
     }
 
     @Override

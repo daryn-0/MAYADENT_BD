@@ -4,11 +4,13 @@ import com.mayadent.MAYADENTBD.entity.EstadoCita;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public interface EstadoCitaService {
     EstadoCita create(EstadoCita ec);
-    EstadoCita read(Long id);
+    Optional<EstadoCita> read(Long id);
     EstadoCita update(EstadoCita ec);
-    void delete(EstadoCita ec);
+    void delete(Long id);
     List<EstadoCita> readAll();
 }

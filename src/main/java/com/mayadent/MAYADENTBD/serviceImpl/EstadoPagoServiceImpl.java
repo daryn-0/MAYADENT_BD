@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EstadoPagoServiceImpl implements EstadoPagoService {
@@ -25,12 +26,13 @@ public class EstadoPagoServiceImpl implements EstadoPagoService {
     }
 
     @Override
-    public void delete(EstadoPago ep) {
-        estadoPagoDao.delete(ep);
+    public void delete(Long id) {
+        estadoPagoDao.delete(id);
     }
 
+
     @Override
-    public EstadoPago read(Long id) {
+    public Optional<EstadoPago> read(Long id) {
         return estadoPagoDao.read(id);
     }
 

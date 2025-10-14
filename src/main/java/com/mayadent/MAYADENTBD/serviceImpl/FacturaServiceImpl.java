@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FacturaServiceImpl implements FacturaService {
@@ -24,12 +25,12 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
     @Override
-    public void delete(Factura f) {
-        facturaDao.delete(f);
+    public void delete(Long id) {
+        facturaDao.delete(id);
     }
 
     @Override
-    public Factura read(Long id) {
+    public Optional<Factura> read(Long id) {
         return facturaDao.read(id);
     }
 
