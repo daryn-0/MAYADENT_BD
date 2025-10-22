@@ -44,6 +44,20 @@ public class PacienteController {
         }
     }
 
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<Paciente> getPacienteByDni(@PathVariable("dni") String dni) {
+        try {
+            Optional<Paciente> paciente = pacienteService.findByDni(dni);  // Buscar por DNI
+            if (paciente.isPresent()) {
+                return new ResponseEntity<>(paciente.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // No se encontró el paciente
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);  // Manejo de excepciones
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> getUsuarioId(@PathVariable("id") Long id) {
         try {

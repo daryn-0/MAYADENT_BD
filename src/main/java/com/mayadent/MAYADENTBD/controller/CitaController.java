@@ -1,9 +1,8 @@
 package com.mayadent.MAYADENTBD.controller;
 
 import com.mayadent.MAYADENTBD.entity.Cita;
-import com.mayadent.MAYADENTBD.entity.Usuario;
 import com.mayadent.MAYADENTBD.service.CitaService;
-import com.mayadent.MAYADENTBD.service.UsuarioService;
+import com.mayadent.MAYADENTBD.serviceImpl.EmailNotificacionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,9 @@ import java.util.Optional;
 public class CitaController {
     @Autowired
     private CitaService citaService;
+    @Autowired
+    private EmailNotificacionService emailNotificacionService;
+
     @GetMapping
     public ResponseEntity<List<Cita>> readAll() {
         try {
@@ -38,6 +40,25 @@ public class CitaController {
     public ResponseEntity<Cita> crearUsuario(@Valid @RequestBody Cita ci) {
         try {
             Cita c = citaService.create(ci);
+            String emailPaciente = c.getPaciente().getCorreo();
+            String emailDoctor = c.getUsuario().getCorreo();
+            String subjectPaciente = "Confirmación de Cita Médica";
+            String textPaciente = "Hola " + c.getPaciente().getNombre() + ",\n\n" +
+                    "Tu cita ha sido programada con el Dr. " + c.getUsuario().getNombre() + ".\n" +
+                    "Detalles de la cita:\n" +
+                    "Fecha: " + c.getFecha_cita() + "\n" +
+                    "Hora: " + c.getHora_cita() + "\n\n" +
+                    "¡Nos vemos pronto!";
+            emailNotificacionService.sendMail(emailPaciente, subjectPaciente, textPaciente);
+
+            String subjectDoctor = "Nueva Cita Asignada";
+            String textDoctor = "Hola " + c.getUsuario().getNombre() + ",\n\n" +
+                    "Tienes una nueva cita programada con el paciente " + c.getPaciente().getNombre() + ".\n" +
+                    "Detalles de la cita:\n" +
+                    "Fecha: " + c.getFecha_cita() + "\n" +
+                    "Hora: " + c.getHora_cita() + "\n\n" +
+                    "¡No olvides estar preparado para la consulta!";
+            emailNotificacionService.sendMail(emailDoctor, subjectDoctor, textDoctor);
             return new ResponseEntity<>(c, HttpStatus.CREATED);
         } catch (Exception e) {
             // TODO: handle exception
@@ -53,6 +74,16 @@ public class CitaController {
         } catch (Exception e) {
             // TODO: handle exception
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<List<Cita>> getCitasByDni(@PathVariable("dni") String dni) {
+        List<Cita> citas = citaService.findByDniPaciente(dni);
+        if (citas.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(citas);
         }
     }
 

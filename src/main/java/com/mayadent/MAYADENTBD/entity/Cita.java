@@ -47,7 +47,7 @@ public class Cita {
     private Set<Cita_Tratamiento> citaTratamiento;
 
     @ManyToOne
-    @JoinColumn(name = "id_estadi_cita", nullable = false)
+    @JoinColumn(name = "id_estadoCita", nullable = false)
     private EstadoCita estadoCita;
 
     @ManyToOne

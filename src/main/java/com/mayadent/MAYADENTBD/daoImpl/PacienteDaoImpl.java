@@ -38,4 +38,9 @@ public class PacienteDaoImpl implements PacienteDao {
     public List<Paciente> readAll() {
         return pacienteRepository.findAll();
     }
+
+    @Override
+    public Optional<Paciente> findByDni(String dni) {
+       return pacienteRepository.findByDni(dni);
+    }
 }

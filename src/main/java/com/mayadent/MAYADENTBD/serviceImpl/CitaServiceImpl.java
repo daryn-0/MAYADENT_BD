@@ -66,4 +66,9 @@ public class CitaServiceImpl implements CitaService {
     public List<Cita> readAll() {
         return citaDao.readAll();
     }
+
+    @Override
+    public List<Cita> findByDniPaciente(String dni) {
+        return citaDao.findByDniPaciente(dni);
+    }
 }

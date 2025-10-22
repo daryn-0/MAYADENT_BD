@@ -38,4 +38,9 @@ public class PacienteServiceImpl implements PacienteService {
     public List<Paciente> readAll() {
         return pacienteDao.readAll();
     }
+
+    @Override
+    public Optional<Paciente> findByDni(String dni) {
+      return pacienteDao.findByDni(dni);
+    }
 }

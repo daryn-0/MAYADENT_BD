@@ -13,4 +13,5 @@ public interface PacienteService {
     void delete(Long id);
     Optional<Paciente> read(Long id);
     List<Paciente> readAll();
+    Optional<Paciente> findByDni(String dni);
 }

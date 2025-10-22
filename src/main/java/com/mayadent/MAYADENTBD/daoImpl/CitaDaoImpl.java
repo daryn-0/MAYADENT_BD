@@ -38,4 +38,9 @@ public class CitaDaoImpl implements CitaDao {
     public List<Cita> readAll() {
         return citaRepository.findAll();
     }
+
+    @Override
+    public List<Cita> findByDniPaciente(String dni) {
+        return citaRepository.findByPacienteDni(dni);
+    }
 }

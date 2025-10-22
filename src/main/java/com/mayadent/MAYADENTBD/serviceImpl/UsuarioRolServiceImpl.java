@@ -1,7 +1,12 @@
 package com.mayadent.MAYADENTBD.serviceImpl;
 
 import com.mayadent.MAYADENTBD.dao.UsuarioRolDao;
+import com.mayadent.MAYADENTBD.entity.Rol;
+import com.mayadent.MAYADENTBD.entity.Usuario;
 import com.mayadent.MAYADENTBD.entity.UsuarioRol;
+import com.mayadent.MAYADENTBD.repository.RolRepository;
+import com.mayadent.MAYADENTBD.repository.UsuarioRepository;
+import com.mayadent.MAYADENTBD.repository.UsuarioRolRepository;
 import com.mayadent.MAYADENTBD.service.UsuarioRolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +18,12 @@ import java.util.Optional;
 public class UsuarioRolServiceImpl implements UsuarioRolService {
     @Autowired
     private UsuarioRolDao usuarioRolDao;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private RolRepository rolRepository;
+    @Autowired
+    private UsuarioRolRepository usuarioRolRepository;
 
     @Override
     public UsuarioRol create(UsuarioRol ur) {

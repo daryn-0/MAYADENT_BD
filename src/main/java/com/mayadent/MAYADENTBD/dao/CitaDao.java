@@ -13,4 +13,5 @@ public interface CitaDao {
     Optional<Cita> read(Long id);
     void delete(Long id);
     List<Cita> readAll();
+    List<Cita> findByDniPaciente(String dni);
 }
