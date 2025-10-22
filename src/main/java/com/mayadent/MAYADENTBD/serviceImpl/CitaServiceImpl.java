@@ -5,6 +5,10 @@ import com.mayadent.MAYADENTBD.entity.Cita;
 import com.mayadent.MAYADENTBD.entity.Paciente;
 import com.mayadent.MAYADENTBD.entity.Usuario;
 import com.mayadent.MAYADENTBD.service.CitaService;
+import com.mayadent.MAYADENTBD.service.EmailService;
+import com.mayadent.MAYADENTBD.service.PacienteService;
+import com.mayadent.MAYADENTBD.service.UsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,33 +20,77 @@ public class CitaServiceImpl implements CitaService {
     @Autowired
     private CitaDao citaDao;
     @Autowired
-    private EmailNotificacionService emailNotificacionService;
+    private EmailService emailService;
+    @Autowired
+    private PacienteService pacienteService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+
+    @Transactional
     @Override
     public Cita create(Cita c) {
         Cita nuevaCita = citaDao.create(c);
 
-        Usuario doctor = c.getUsuario();
-        Paciente paciente = c.getPaciente();
+        try {
+            if (nuevaCita.getPaciente() != null && nuevaCita.getUsuario() != null) {
 
-        emailNotificacionService.sendMail(
-                paciente.getCorreo(),
-                "Nueva cita programada",
-                "Estimado/a " + paciente.getNombre() + ",\n\n" +
-                        "El Dr. " + doctor.getNombre() + " " + doctor.getApellido() +
-                        " te ha programado una cita para el " +
-                        c.getFecha_cita() + " a las " + c.getHora_cita() + ".\n\n" +
-                        "Descripción: " + c.getDescripcion() + "\n\n" +
-                        "Atentamente,\nClínica Mayadent."
-        );
+                Paciente paciente = pacienteService.read(nuevaCita.getPaciente().getId()).orElse(null);
+                Usuario usuario = usuarioService.read(nuevaCita.getUsuario().getId()).orElse(null);
 
-        emailNotificacionService.sendMail(
-                doctor.getCorreo(),
-                "Nueva cita registrada",
-                "Has registrado una cita con el paciente " +
-                        paciente.getNombre() + " " + paciente.getApellido() +
-                        " para el " + c.getFecha_cita() + " a las " + c.getHora_cita() + "."
-        );
+                if (paciente == null || usuario == null) {
+                    System.err.println("No se encontraron datos válidos de paciente o usuario.");
+                    return nuevaCita;
+                }
+
+                String correoPaciente = paciente.getCorreo();
+                String correoDoctor = usuario.getCorreo();
+
+                System.out.println("Correo Paciente: " + correoPaciente);
+                System.out.println("Correo Doctor: " + correoDoctor);
+
+                String asunto = "Confirmación de Cita Odontológica";
+
+                String mensajePaciente = String.format(
+                        "Estimado/a %s %s,\n\nSu cita ha sido registrada exitosamente.\nFecha: %s\nHora: %s\nDoctor: %s %s\n\nClínica Odontológica Unión",
+                        paciente.getNombre(),
+                        paciente.getApellido(),
+                        nuevaCita.getFecha_cita(),
+                        nuevaCita.getHora_cita(),
+                        usuario.getNombre(),
+                        usuario.getApellido()
+                );
+
+                String mensajeDoctor = String.format(
+                        "Estimado/a Dr(a). %s %s,\n\nSe le ha asignado una nueva cita.\nPaciente: %s %s\nFecha: %s\nHora: %s\n\nClínica Odontológica Unión",
+                        usuario.getNombre(),
+                        usuario.getApellido(),
+                        paciente.getNombre(),
+                        paciente.getApellido(),
+                        nuevaCita.getFecha_cita(),
+                        nuevaCita.getHora_cita()
+                );
+
+                if (correoPaciente != null && !correoPaciente.isBlank()) {
+                    emailService.enviarCorreo(correoPaciente, asunto, mensajePaciente);
+                } else {
+                    System.err.println("Paciente sin correo registrado, no se envió notificación.");
+                }
+
+                if (correoDoctor != null && !correoDoctor.isBlank()) {
+                    emailService.enviarCorreo(correoDoctor, asunto, mensajeDoctor);
+                } else {
+                    System.err.println("Doctor sin correo registrado, no se envió notificación.");
+                }
+            } else {
+                System.err.println("Paciente o usuario nulos al registrar la cita.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         return nuevaCita;
     }

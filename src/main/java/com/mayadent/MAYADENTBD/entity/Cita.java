@@ -1,13 +1,15 @@
 package com.mayadent.MAYADENTBD.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Data
@@ -22,11 +24,15 @@ public class Cita {
     @Column(name = "id")
     private Long id;
     @Column(name = "fecha_cita")
-    private Date fecha_cita;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fecha_cita;
     @Column(name = "hora_cita")
     private String hora_cita;
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "recordatorio_enviado")
+    private boolean recordatorioEnviado = false;
     @Column(name = "estado")
     private char estado;
 

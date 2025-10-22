@@ -6,35 +6,34 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "tratamientos")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Table(name = "doctores")
 @Builder
-public class Tratamiento {
+public class Doctor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Column(name = "costo_base")
-    private double costo_base;
+    @Column(name = "apellido")
+    private String apellido;
+    @Column(name = "telefono")
+    private String telefono;
+    @Column(name = "correo")
+    private String correo;
     @Column(name = "estado")
     private char estado;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tratamiento")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "doctor")
     @JsonIgnore
-    private Set<Cita_Tratamiento> citaTratamiento;
-
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_doctor", nullable = true)
-    private Doctor doctor;
-
+    private Set<Tratamiento> tratamiento;
 }

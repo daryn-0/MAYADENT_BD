@@ -2,7 +2,6 @@ package com.mayadent.MAYADENTBD.dao;
 
 import com.mayadent.MAYADENTBD.entity.Cita;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 
