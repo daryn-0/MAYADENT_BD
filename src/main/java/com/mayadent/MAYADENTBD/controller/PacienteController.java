@@ -95,6 +95,35 @@ public class PacienteController {
         }
     }
 
+    @PutMapping("/actualizar/{dni}")
+    public ResponseEntity<Paciente> updateUsuarioPorDni(@PathVariable("dni") String dni, @Valid @RequestBody Paciente pa) {
+        try {
+            Optional<Paciente> pacienteOpt = pacienteService.findByDni(dni);
+
+            if (pacienteOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            Paciente pacienteExistente = pacienteOpt.get();
+
+            pacienteExistente.setNombre(pa.getNombre());
+            pacienteExistente.setApellido(pa.getApellido());
+            pacienteExistente.setCorreo(pa.getCorreo());
+            pacienteExistente.setDni(pa.getDni());
+            pacienteExistente.setTelefono(pa.getTelefono());
+            pacienteExistente.setDireccion(pa.getDireccion());
+            pacienteExistente.setEstado(pa.getEstado());
+
+            Paciente actualizado = pacienteService.update(pacienteExistente);
+
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error al actualizar paciente con DNI " + dni + ": " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Paciente> updateUsuario(@PathVariable("id") Long id, @Valid @RequestBody Paciente pa) {
         Optional<Paciente> paciente = pacienteService.read(id);
@@ -105,4 +134,27 @@ public class PacienteController {
 
         }
     }
+
+    @PutMapping("/desactivar/{dni}")
+    public ResponseEntity<Paciente> desactivarPorDni(@PathVariable("dni") String dni) {
+        try {
+            Optional<Paciente> pacienteOpt = pacienteService.findByDni(dni);
+            if (pacienteOpt.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            Paciente paciente = pacienteOpt.get();
+            paciente.setEstado("Inactivo");
+            Paciente actualizado = pacienteService.update(paciente);
+
+            System.out.println("Paciente con DNI " + dni + " marcado como Inactivo.");
+
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        } catch (Exception e) {
+            System.err.println("Error al desactivar paciente con DNI: " + dni);
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

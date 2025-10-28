@@ -16,5 +16,4 @@ PacienteDao {
     List<Paciente> readAll();
     Optional<Paciente> findByDni(String dni);
     List<Paciente> findByEstado(String estado);
-
 }
