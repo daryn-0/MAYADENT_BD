@@ -47,14 +47,29 @@ public class PacienteController {
     @GetMapping("/dni/{dni}")
     public ResponseEntity<Paciente> getPacienteByDni(@PathVariable("dni") String dni) {
         try {
-            Optional<Paciente> paciente = pacienteService.findByDni(dni);  // Buscar por DNI
+            Optional<Paciente> paciente = pacienteService.findByDni(dni);
             if (paciente.isPresent()) {
                 return new ResponseEntity<>(paciente.get(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // No se encontró el paciente
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);  // Manejo de excepciones
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<Paciente>> getPacientesPorEstado(@PathVariable("estado") String estado) {
+        try {
+            List<Paciente> pacientes = pacienteService.findByEstado(estado);
+            if (pacientes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(pacientes, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al buscar pacientes por estado: " + e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

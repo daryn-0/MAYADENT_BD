@@ -40,6 +40,11 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
+    public List<Paciente> findByEstado(String estado) {
+        return pacienteDao.findByEstado(estado);
+    }
+
+    @Override
     public Optional<Paciente> findByDni(String dni) {
       return pacienteDao.findByDni(dni);
     }

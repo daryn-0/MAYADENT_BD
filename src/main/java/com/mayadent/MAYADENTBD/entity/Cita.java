@@ -34,7 +34,8 @@ public class Cita {
     @Column(name = "recordatorio_enviado")
     private boolean recordatorioEnviado = false;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
+
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cita")
     @JsonIgnore

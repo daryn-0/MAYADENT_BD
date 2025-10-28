@@ -43,4 +43,9 @@ public class PacienteDaoImpl implements PacienteDao {
     public Optional<Paciente> findByDni(String dni) {
        return pacienteRepository.findByDni(dni);
     }
+
+    @Override
+    public List<Paciente> findByEstado(String estado) {
+        return pacienteRepository.findByEstado(estado);
+    }
 }
