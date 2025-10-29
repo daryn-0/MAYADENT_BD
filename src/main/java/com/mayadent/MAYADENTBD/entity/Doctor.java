@@ -31,7 +31,7 @@ public class Doctor {
     @Column(name = "correo")
     private String correo;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "doctor")
     @JsonIgnore

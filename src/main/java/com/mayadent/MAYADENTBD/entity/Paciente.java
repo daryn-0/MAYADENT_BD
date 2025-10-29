@@ -26,7 +26,7 @@ public class Paciente {
     private String nombre;
     @Column(name = "apellido")
     private String apellido;
-    @Column(name = "dni")
+    @Column(name = "dni", unique = true)
     private String dni;
     @Column(name = "correo")
     private String correo;

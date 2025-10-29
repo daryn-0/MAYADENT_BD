@@ -27,7 +27,7 @@ public class Tratamiento {
     @Column(name = "costo_base")
     private double costo_base;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tratamiento")
     @JsonIgnore
