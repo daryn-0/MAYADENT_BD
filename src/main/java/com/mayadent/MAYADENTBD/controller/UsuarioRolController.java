@@ -38,10 +38,15 @@ public class UsuarioRolController {
     @PostMapping
     public ResponseEntity<UsuarioRol> crearUsuario(@Valid @RequestBody UsuarioRol ur) {
         try {
+            if (ur.getEstado() == null || ur.getEstado().trim().isEmpty()) {
+                ur.setEstado("Activo");
+            }
+
             UsuarioRol usuarioRol = usuarioRolService.create(ur);
             return new ResponseEntity<>(usuarioRol, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear usuarioRol: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

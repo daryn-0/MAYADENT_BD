@@ -20,7 +20,7 @@ public class Cita_Tratamiento {
     @Column(name = "costo_final")
     private double costo_final;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_cita", nullable = false)

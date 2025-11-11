@@ -26,7 +26,7 @@ public class Factura {
     @Column(name = "monto_total")
     private double monto_total;
     @Column(name = "estado")
-    private Long estado;
+    private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "factura")
     @JsonIgnore

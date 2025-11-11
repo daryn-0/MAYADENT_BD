@@ -36,10 +36,15 @@ public class PacienteController {
     @PostMapping
     public ResponseEntity<Paciente> crearUsuario(@Valid @RequestBody Paciente pa) {
         try {
+            if (pa.getEstado() == null || pa.getEstado().trim().isEmpty()) {
+                pa.setEstado("Activo");
+            }
+
             Paciente paciente = pacienteService.create(pa);
             return new ResponseEntity<>(paciente, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear paciente: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

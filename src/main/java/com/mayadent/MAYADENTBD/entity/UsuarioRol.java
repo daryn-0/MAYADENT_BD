@@ -18,6 +18,8 @@ public class UsuarioRol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(name = "estado")
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")

@@ -37,10 +37,16 @@ public class EstadoCitaController {
     @PostMapping
     public ResponseEntity<EstadoCita> crearUsuario(@Valid @RequestBody EstadoCita ec) {
         try {
+            // ⚙️ Si el campo estado no viene o está vacío → se asigna "Activo" por defecto
+            if (ec.getEstado() == null || ec.getEstado().trim().isEmpty()) {
+                ec.setEstado("Activo");
+            }
+
             EstadoCita estadoCita = estadoCitaService.create(ec);
             return new ResponseEntity<>(estadoCita, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear estado de cita: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

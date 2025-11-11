@@ -38,10 +38,15 @@ public class UsoInsumosController {
     @PostMapping
     public ResponseEntity<UsoInsumos> crearUsuario(@Valid @RequestBody UsoInsumos ui) {
         try {
+            if (ui.getEstado() == null || ui.getEstado().trim().isEmpty()) {
+                ui.setEstado("Activo");
+            }
+
             UsoInsumos usoInsumos = usoInsumosService.create(ui);
             return new ResponseEntity<>(usoInsumos, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear uso de insumos: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

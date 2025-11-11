@@ -20,7 +20,7 @@ public class UsoInsumos {
     @Column(name = "cantidad_usada")
     private int cantidad_usada;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_cita", nullable = false)

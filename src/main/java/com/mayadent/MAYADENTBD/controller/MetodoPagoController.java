@@ -39,10 +39,16 @@ public class MetodoPagoController {
     @PostMapping
     public ResponseEntity<MetodoPago> crearUsuario(@Valid @RequestBody MetodoPago mp) {
         try {
+            // ⚙️ Si el campo estado no viene o está vacío → se asigna "Activo" por defecto
+            if (mp.getEstado() == null || mp.getEstado().trim().isEmpty()) {
+                mp.setEstado("Activo");
+            }
+
             MetodoPago metodoPago = metodoPagoService.create(mp);
             return new ResponseEntity<>(metodoPago, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear método de pago: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

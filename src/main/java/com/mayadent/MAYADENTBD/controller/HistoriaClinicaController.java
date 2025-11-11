@@ -36,10 +36,15 @@ public class HistoriaClinicaController {
     @PostMapping
     public ResponseEntity<HistoriaClinica> crearUsuario(@Valid @RequestBody HistoriaClinica hc) {
         try {
+            if (hc.getEstado() == null || hc.getEstado().trim().isEmpty()) {
+                hc.setEstado("Activo");
+            }
+
             HistoriaClinica historiaClinica = historiaClinicaService.create(hc);
             return new ResponseEntity<>(historiaClinica, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear historia clínica: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -37,10 +37,15 @@ public class InventarioController {
     @PostMapping
     public ResponseEntity<Inventario> crearUsuario(@Valid @RequestBody Inventario in) {
         try {
+            if (in.getEstado() == null || in.getEstado().trim().isEmpty()) {
+                in.setEstado("Activo");
+            }
+
             Inventario inventario = inventarioService.create(in);
             return new ResponseEntity<>(inventario, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear inventario: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

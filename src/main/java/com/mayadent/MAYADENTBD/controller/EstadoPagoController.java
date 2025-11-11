@@ -38,10 +38,15 @@ public class EstadoPagoController {
     @PostMapping
     public ResponseEntity<EstadoPago> crearUsuario(@Valid @RequestBody EstadoPago ep) {
         try {
+            if (ep.getEstado() == null || ep.getEstado().trim().isEmpty()) {
+                ep.setEstado("Activo");
+            }
+
             EstadoPago estadoPago = estadoPagoService.create(ep);
             return new ResponseEntity<>(estadoPago, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear estado de pago: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -35,10 +35,15 @@ public class DoctorController {
     @PostMapping
     public ResponseEntity<Doctor> crearUsuario(@Valid @RequestBody Doctor d) {
         try {
+            if (d.getEstado() == null || d.getEstado().trim().isEmpty()) {
+                d.setEstado("Activo");
+            }
+
             Doctor doctor = doctorService.create(d);
             return new ResponseEntity<>(doctor, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear doctor: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

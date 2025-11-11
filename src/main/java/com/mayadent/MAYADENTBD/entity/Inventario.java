@@ -34,7 +34,7 @@ public class Inventario {
     @Column(name = "fecha_vencimiento")
     private Date fecha_vencimiento;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inventario")
     @JsonIgnore

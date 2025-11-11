@@ -24,7 +24,7 @@ public class HistoriaClinica {
     @Column(name = "monto_total")
     private double monto_total;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_paciente", nullable = false)

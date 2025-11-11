@@ -37,10 +37,15 @@ public class FacturaController {
     @PostMapping
     public ResponseEntity<Factura> crearUsuario(@Valid @RequestBody Factura f) {
         try {
+            if (f.getEstado() == null || f.getEstado().trim().isEmpty()) {
+                f.setEstado("Activo");
+            }
+
             Factura factura = facturaService.create(f);
             return new ResponseEntity<>(factura, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear factura: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

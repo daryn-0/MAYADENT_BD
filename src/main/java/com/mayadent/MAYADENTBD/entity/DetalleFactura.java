@@ -26,7 +26,7 @@ public class DetalleFactura {
     @Column(name = "precio_unitario")
     private double precio_unitario;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_factura", nullable = false)

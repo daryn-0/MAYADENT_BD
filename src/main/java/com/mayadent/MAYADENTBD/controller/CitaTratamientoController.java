@@ -37,10 +37,15 @@ public class CitaTratamientoController {
     @PostMapping
     public ResponseEntity<Cita_Tratamiento> crearUsuario(@Valid @RequestBody Cita_Tratamiento ct) {
         try {
+            if (ct.getEstado() == null || ct.getEstado().trim().isEmpty()) {
+                ct.setEstado("Activo");
+            }
+
             Cita_Tratamiento citaTratamiento = citaTratamientoService.create(ct);
             return new ResponseEntity<>(citaTratamiento, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear cita-tratamiento: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

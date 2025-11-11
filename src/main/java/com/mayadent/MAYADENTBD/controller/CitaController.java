@@ -43,11 +43,14 @@ public class CitaController {
     @PostMapping
     public ResponseEntity<Cita> crearUsuario(@Valid @RequestBody Cita ci) {
         try {
+            if (ci.getEstado() == null || ci.getEstado().trim().isEmpty()) {
+                ci.setEstado("Activo");
+            }
+
             Cita cita = citaService.create(ci);
             return new ResponseEntity<>(cita, HttpStatus.CREATED);
         } catch (Exception e) {
-            logger.error("Error al crear paciente: ", e);
-            // TODO: handle exception
+            logger.error("Error al crear cita: ", e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

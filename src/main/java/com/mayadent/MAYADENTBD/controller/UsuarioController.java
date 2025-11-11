@@ -34,10 +34,15 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody Usuario us) {
         try {
+            if (us.getEstado() == null || us.getEstado().trim().isEmpty()) {
+                us.setEstado("Activo");
+            }
+
             Usuario u = usuarioService.create(us);
             return new ResponseEntity<>(u, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear usuario: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

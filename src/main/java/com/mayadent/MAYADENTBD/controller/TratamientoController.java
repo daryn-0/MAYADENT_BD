@@ -36,10 +36,15 @@ public class TratamientoController {
     @PostMapping
     public ResponseEntity<Tratamiento> crearUsuario(@Valid @RequestBody Tratamiento t) {
         try {
+            if (t.getEstado() == null || t.getEstado().trim().isEmpty()) {
+                t.setEstado("Activo");
+            }
+
             Tratamiento tratamiento = tratamientoService.create(t);
             return new ResponseEntity<>(tratamiento, HttpStatus.CREATED);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("Error al crear tratamiento: " + e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

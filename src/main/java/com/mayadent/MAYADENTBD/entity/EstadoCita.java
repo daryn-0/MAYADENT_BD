@@ -23,7 +23,7 @@ public class EstadoCita {
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "estado")
-    private char estado;
+    private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "estadoCita")
     @JsonIgnore
