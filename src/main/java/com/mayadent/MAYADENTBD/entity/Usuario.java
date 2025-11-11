@@ -41,5 +41,9 @@ public class Usuario {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
     @JsonIgnore
     private Set<UsuarioRol> usuarioRol;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
+    @JsonIgnore
+    private Set<Inventario> inventario;
 }
 

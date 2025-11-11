@@ -1,12 +1,15 @@
 package com.mayadent.MAYADENTBD.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -32,11 +35,17 @@ public class Inventario {
     @Column(name = "costo_unitario")
     private double costo_unitario;
     @Column(name = "fecha_vencimiento")
-    private Date fecha_vencimiento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fecha_vencimiento;
     @Column(name = "estado")
     private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "inventario")
     @JsonIgnore
     private Set<UsoInsumos> usoInsumo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 }
