@@ -53,7 +53,11 @@ public class CitaServiceImpl implements CitaService {
                 String asunto = "Confirmación de Cita Odontológica";
 
                 String mensajePaciente = String.format(
-                        "Estimado/a %s %s,\n\nSu cita ha sido registrada exitosamente.\nFecha: %s\nHora: %s\nDoctor: %s %s\n\nClínica Odontológica Unión",
+                        "Estimado/a %s %s,\\n\\nSu cita ha sido registrada exitosamente en el sistema.\\n\" +\n" +
+                                "                    \"Fecha: %s\\nHora: %s\\nDoctor asignado: %s %s\\n\\n\" +\n" +
+                                "                    \"Su cita se encuentra *pendiente de confirmación* por parte del doctor.\\n\" +\n" +
+                                "                    \"Recibirá un correo de confirmación una vez que el doctor la apruebe.\\n\\n\" +\n" +
+                                "                    \"Gracias por confiar en nosotros.\\nClínica Odontológica MAYADENT.",
                         paciente.getNombre(),
                         paciente.getApellido(),
                         nuevaCita.getFecha_cita(),
@@ -63,7 +67,7 @@ public class CitaServiceImpl implements CitaService {
                 );
 
                 String mensajeDoctor = String.format(
-                        "Estimado/a Dr(a). %s %s,\n\nSe le ha asignado una nueva cita.\nPaciente: %s %s\nFecha: %s\nHora: %s\n\nClínica Odontológica Unión",
+                        "Estimado/a Dr(a). %s %s,\n\nSe le ha asignado una nueva cita.\nPaciente: %s %s\nFecha: %s\nHora: %s\n\nClínica Odontológica MAYADENT",
                         usuario.getNombre(),
                         usuario.getApellido(),
                         paciente.getNombre(),
@@ -97,7 +101,78 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public Cita update(Cita c) {
-        return citaDao.update(c);
+        Cita citaActualizada = citaDao.update(c);
+
+        try {
+            if (citaActualizada.getPaciente() != null && citaActualizada.getUsuario() != null && citaActualizada.getEstadoCita() != null) {
+
+                Paciente paciente = pacienteService.read(citaActualizada.getPaciente().getId()).orElse(null);
+                Usuario usuario = usuarioService.read(citaActualizada.getUsuario().getId()).orElse(null);
+
+                if (paciente == null || usuario == null) {
+                    System.err.println("No se encontraron datos válidos de paciente o usuario para enviar notificación.");
+                    return citaActualizada;
+                }
+
+                String correoPaciente = paciente.getCorreo();
+                if (correoPaciente == null || correoPaciente.isBlank()) {
+                    System.err.println("Paciente sin correo registrado. No se enviará correo.");
+                    return citaActualizada;
+                }
+
+                Long estadoId = citaActualizada.getEstadoCita().getId();
+                String asunto = "";
+                String mensaje = "";
+
+                switch (estadoId.intValue()) {
+                    case 2 -> {
+                        asunto = "Confirmación de su Cita Odontológica - Clínica MAYADENT";
+                        mensaje = String.format(
+                                "Estimado/a %s %s,\n\nSu cita odontológica ha sido *confirmada* por el doctor.\n" +
+                                        "Fecha: %s\nHora: %s\nDoctor: %s %s\n\n" +
+                                        "Por favor, llegue 10 minutos antes de la hora programada.\n\n" +
+                                        "Clínica Odontológica MAYADENT.",
+                                paciente.getNombre(),
+                                paciente.getApellido(),
+                                citaActualizada.getFecha_cita(),
+                                citaActualizada.getHora_cita(),
+                                usuario.getNombre(),
+                                usuario.getApellido()
+                        );
+                    }
+                    case 4 -> {
+                        asunto = "Cancelación de su Cita Odontológica - Clínica MAYADENT";
+                        mensaje = String.format(
+                                "Estimado/a %s %s,\n\nLamentamos informarle que su cita programada para:\n" +
+                                        "Fecha: %s\nHora: %s\nDoctor: %s %s\n\n" +
+                                        "ha sido *cancelada*. Puede comunicarse con nosotros para reprogramarla.\n\n" +
+                                        "Clínica Odontológica MAYADENT.",
+                                paciente.getNombre(),
+                                paciente.getApellido(),
+                                citaActualizada.getFecha_cita(),
+                                citaActualizada.getHora_cita(),
+                                usuario.getNombre(),
+                                usuario.getApellido()
+                        );
+                    }
+                    default -> System.out.println("Estado de cita no requiere notificación. ID: " + estadoId);
+                }
+
+                if (!mensaje.isEmpty()) {
+                    emailService.enviarCorreo(correoPaciente, asunto, mensaje);
+                    System.out.println("Correo enviado al paciente: " + correoPaciente + " (Estado ID: " + estadoId + ")");
+                }
+
+            } else {
+                System.err.println("Cita sin datos completos (paciente, usuario o estadoCita nulos).");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error al enviar correo de actualización de cita: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return citaActualizada;
     }
 
     @Override
