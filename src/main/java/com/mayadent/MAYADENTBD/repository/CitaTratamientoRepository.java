@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CitaTratamientoRepository extends JpaRepository<Cita_Tratamiento, Long> {
-    @Query("SELECT ct FROM Cita_Tratamiento ct WHERE ct.cita.id = :citaId")
-    List<Cita_Tratamiento> findByCitaId(@Param("citaId") Long citaId);
+    @Query("SELECT ct FROM Cita_Tratamiento ct WHERE ct.cita.id = :id")
+    List<Cita_Tratamiento> findByCitaId(@Param("id") Long id);
 }
