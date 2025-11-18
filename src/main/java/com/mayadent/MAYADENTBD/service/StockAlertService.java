@@ -16,7 +16,7 @@ public class StockAlertService {
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = "0 /5 * * * *")
     public void verificarStockBajo() {
         int limiteCritico = 2;
 
