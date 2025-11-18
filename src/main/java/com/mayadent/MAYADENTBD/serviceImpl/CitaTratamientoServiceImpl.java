@@ -39,4 +39,9 @@ public class CitaTratamientoServiceImpl implements CitaTratamientoService {
     public List<Cita_Tratamiento> readAll() {
         return citaTratamientoDao.findAll();
     }
+
+    @Override
+    public List<Cita_Tratamiento> findByCitaId(Long id) {
+        return citaTratamientoDao.findByCitaId(id);
+    }
 }

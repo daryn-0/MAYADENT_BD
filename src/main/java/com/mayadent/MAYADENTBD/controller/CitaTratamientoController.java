@@ -61,6 +61,21 @@ public class CitaTratamientoController {
         }
     }
 
+    @GetMapping("/cita/{id}")
+    public ResponseEntity<List<Cita_Tratamiento>> getByCitaId(@PathVariable Long id) {
+        try {
+            List<Cita_Tratamiento> citaTratamientos = citaTratamientoService.findByCitaId(id);
+            if (citaTratamientos.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(citaTratamientos, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Cita_Tratamiento> delUsuario(@PathVariable("id") Long id) {
         try {

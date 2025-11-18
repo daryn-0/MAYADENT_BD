@@ -13,4 +13,6 @@ public interface CitaTratamientoService {
     void delete (Long id);
     Optional<Cita_Tratamiento> read(Long id);
     List<Cita_Tratamiento> readAll();
+    List<Cita_Tratamiento> findByCitaId(Long id);
+
 }

@@ -38,4 +38,9 @@ public class CitaTratamientoDaoImpl implements CitaTratamientoDao {
     public List<Cita_Tratamiento> findAll() {
         return citaTratamientoRepository.findAll();
     }
+
+    @Override
+    public List<Cita_Tratamiento> findByCitaId(Long id) {
+        return citaTratamientoRepository.findByCitaId(id);
+    }
 }
