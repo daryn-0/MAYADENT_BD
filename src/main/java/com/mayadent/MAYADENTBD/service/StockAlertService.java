@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StockAlertService {s
+public class StockAlertService {
     @Autowired
     private InventarioRepository inventarioRepository;
 
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     public void verificarStockBajo() {
         int limiteCritico = 2;
 
