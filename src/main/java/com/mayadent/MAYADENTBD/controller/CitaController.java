@@ -93,8 +93,24 @@ public class CitaController {
         if (cita.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
+            ci.setId(id);
             return new ResponseEntity<>(citaService.update(ci), HttpStatus.OK);
 
+        }
+    }
+
+    @PostMapping("/{id}/enviar-correo")
+    public ResponseEntity<Void> enviarCorreoConfirmacion(@PathVariable("id") Long id) {
+        try {
+            Optional<Cita> cita = citaService.read(id);
+            if (cita.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            citaService.enviarCorreoConfirmacion(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error al enviar correo de confirmación: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

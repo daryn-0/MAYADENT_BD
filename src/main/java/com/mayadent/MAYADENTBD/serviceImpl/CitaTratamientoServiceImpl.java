@@ -2,6 +2,7 @@ package com.mayadent.MAYADENTBD.serviceImpl;
 
 import com.mayadent.MAYADENTBD.dao.CitaTratamientoDao;
 import com.mayadent.MAYADENTBD.entity.Cita_Tratamiento;
+import com.mayadent.MAYADENTBD.repository.CitaTratamientoRepository;
 import com.mayadent.MAYADENTBD.service.CitaTratamientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class CitaTratamientoServiceImpl implements CitaTratamientoService {
     @Autowired
     private CitaTratamientoDao citaTratamientoDao;
+    @Autowired
+    private CitaTratamientoRepository citaTratamientoRepository;
 
     @Override
     public Cita_Tratamiento create(Cita_Tratamiento ct) {
@@ -44,4 +47,5 @@ public class CitaTratamientoServiceImpl implements CitaTratamientoService {
     public List<Cita_Tratamiento> findByCitaId(Long id) {
         return citaTratamientoDao.findByCitaId(id);
     }
+
 }

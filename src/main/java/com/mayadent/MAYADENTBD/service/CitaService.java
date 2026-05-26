@@ -14,4 +14,5 @@ public interface CitaService {
     void delete(Long id);
     List<Cita> readAll();
     List<Cita> findByDniPaciente(String dni);
+    void enviarCorreoConfirmacion(Long citaId);
 }

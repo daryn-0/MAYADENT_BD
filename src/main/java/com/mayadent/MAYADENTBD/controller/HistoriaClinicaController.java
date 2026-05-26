@@ -1,6 +1,8 @@
 package com.mayadent.MAYADENTBD.controller;
 
+import com.mayadent.MAYADENTBD.entity.Cita;
 import com.mayadent.MAYADENTBD.entity.HistoriaClinica;
+import com.mayadent.MAYADENTBD.service.CitaService;
 import com.mayadent.MAYADENTBD.service.HistoriaClinicaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +10,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/historiaClinicas")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping({"/historiaClinicas", "/historiales-clinicos"})
+@CrossOrigin(
+        origins = "http://localhost:4200",
+        methods = {
+                RequestMethod.GET,
+                RequestMethod.POST,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.OPTIONS
+        }
+)
 
 public class HistoriaClinicaController {
     @Autowired
     private HistoriaClinicaService historiaClinicaService;
+
+    @Autowired
+    private CitaService citaService;
+
     @GetMapping
     public ResponseEntity<List<HistoriaClinica>> readAll() {
         try {
@@ -44,6 +60,34 @@ public class HistoriaClinicaController {
             return new ResponseEntity<>(historiaClinica, HttpStatus.CREATED);
         } catch (Exception e) {
             System.err.println("Error al crear historia clínica: " + e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/cita/{id}")
+    public ResponseEntity<HistoriaClinica> crearPorCita(@PathVariable("id") Long id) {
+        try {
+            Optional<Cita> cita = citaService.read(id);
+            if (cita.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            if (historiaClinicaService.existsByCitaId(id)) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+
+            HistoriaClinica historiaClinica = HistoriaClinica.builder()
+                    .fecha_emision(new Date())
+                    .monto_total(0)
+                    .estado("Activo")
+                    .paciente(cita.get().getPaciente())
+                    .cita(cita.get())
+                    .build();
+
+            return new ResponseEntity<>(historiaClinicaService.create(historiaClinica), HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.err.println("Error al crear historia clínica por cita: " + e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

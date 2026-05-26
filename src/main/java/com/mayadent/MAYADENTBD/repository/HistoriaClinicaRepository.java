@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HistoriaClinicaRepository extends JpaRepository<HistoriaClinica, Long> {
+    boolean existsByCitaId(Long citaId);
 }

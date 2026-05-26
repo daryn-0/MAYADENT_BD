@@ -38,4 +38,9 @@ public class HistoriaClinicaDaoImpl implements HistoriaClinicaDao {
     public List<HistoriaClinica> readAll() {
         return historiaClinicaRepository.findAll();
     }
+
+    @Override
+    public boolean existsByCitaId(Long citaId) {
+        return historiaClinicaRepository.existsByCitaId(citaId);
+    }
 }

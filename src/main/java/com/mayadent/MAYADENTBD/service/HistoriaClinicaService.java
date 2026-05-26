@@ -13,4 +13,5 @@ public interface HistoriaClinicaService {
     void delete(Long id);
     Optional<HistoriaClinica> read(Long id);
     List<HistoriaClinica> readAll();
+    boolean existsByCitaId(Long citaId);
 }
